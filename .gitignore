@@ -1,0 +1,5 @@
+Gemfile.lock
+app/*
+log/*
+ssl/*.key
+ssl/*.pem
