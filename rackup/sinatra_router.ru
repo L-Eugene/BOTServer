@@ -1,6 +1,5 @@
 require_relative 'router.rb'
 
-
 # Disable Thin logging
 # Thin::Logging.silent = true
 

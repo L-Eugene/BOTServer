@@ -1,0 +1,28 @@
+AllCops:
+  Exclude:
+    - 'app/*'
+
+Documentation:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Style/RegexpLiteral:
+  EnforcedStyle: percent_r
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/AbcSize:
+  Max: 25
+
+Style/MixinUsage:
+  Exclude:
+    - 'Rakefile'
+    - 'rakefile.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - 'rakefile.rb'

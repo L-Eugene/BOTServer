@@ -70,6 +70,7 @@ module Tokens
     bots_config(config_filename).map do |hash|
       status = verify_token(Telegram::Bot::Client.new(hash['token']))
       next unless status['valid_token']
+
       {
         name: hash.key?('class_name') ? hash['class_name'] : status['telegram_name'],
         token: hash['token']
@@ -92,26 +93,21 @@ module Tokens
   # token example: '123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11'
   #
   def self.verify_token(bot)
-    status = {}
+    status = { 'updated_at': time_now }
 
-    begin
-      # call getMe Telegram Bot API endpoint
-      result = bot.api.get_me.fetch('result')
-    rescue StandardError => e
-      status['valid_token'] = false
-      status['telegram_error'] = "\"#{sanitize(e.message)}\""
-    else
-      # username is the @BOTNAMEbot
-      # first_name is the public descritpion name (may contain blanks),
-      #   e.g. "BOT NAME"
-      # id is the  internal Telegram ID for the Bot
-      status['telegram_name'] = result['username']
-      status['telegram_description'] = result['first_name']
-      status['telegram_id'] = result['id']
-      status['valid_token'] = true
-    end
-    status['updated_at'] = time_now
-    status
+    # call getMe Telegram Bot API endpoint
+    result = bot.api.get_me.fetch('result')
+  rescue StandardError => e
+    status.merge('valid_token' => false, 'telegram_error' => "\"#{sanitize(e.message)}\"")
+  else
+    # username is the @BOTNAMEbot
+    # first_name is the public descritpion name (may contain blanks),
+    #   e.g. "BOT NAME"
+    # id is the  internal Telegram ID for the Bot
+    status['telegram_name'] = result['username']
+    status['telegram_description'] = result['first_name']
+    status['telegram_id'] = result['id']
+    status['valid_token'] = true
   end
 
   def self.bots_config(config_filename)

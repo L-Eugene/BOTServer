@@ -1,11 +1,9 @@
-#
-# file: utilities.rb
-#
+# frozen_string_literal: true
+
 require 'time'
 
-# return timestamp in ISO8601 with precision in milliseconds 
+# return timestamp in ISO8601 with precision in milliseconds
 def time_now
-  #Time.now.utc.iso8601(3)
   Time.now.utc.iso8601
 end
 
@@ -14,18 +12,19 @@ def remove_tilde(string)
 end
 
 def underscore(string)
-   string.gsub(/::/, '/').
-   gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-   gsub(/([a-z\d])([A-Z])/,'\1_\2').
-   tr("-", "_").
-   downcase
+  string
+    .gsub(%r{::}, '/')
+    .gsub(%r{([A-Z]+)([A-Z][a-z])}, '\1_\2')
+    .gsub(%r{([a-z\d])([A-Z])}, '\1_\2')
+    .tr('-', '_')
+    .downcase
 end
 
-def underscored_filename(string, path='.')
+def underscored_filename(string, path = '.')
   "#{path}/#{underscore(string)}.rb"
 end
 
-def downcase_filename(string, path='.')
+def downcase_filename(string, path = '.')
   "#{path}/#{string.downcase}.rb"
 end
 

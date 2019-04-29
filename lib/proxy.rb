@@ -14,23 +14,23 @@ module Proxy
   def self.stop
     shell_command :stop
   end
+
   #
   # HTTPS configuration for nginx config
-  #  
+  #
   def self.config
-    File.read("#{Config.templates_directory}/proxy_config.template") % 
-      { 
-        :port => self.port, 
-        :host => self.host, 
-        :certificate_file_pem => self.certificate_file_pem, 
-        :certificate_file_key => self.certificate_file_key
-      }
+    format(
+      File.read("#{Config.templates_directory}/proxy_config.template"),
+      port: port,
+      host: host,
+      certificate_file_pem: certificate_file_pem,
+      certificate_file_key: certificate_file_key
+    )
   end
 
-  private
-
   def self.shell_command(action)
-    File.read("#{Config.templates_directory}/proxy.sh.template") % { :action => action }
-  end  
+    format(File.read("#{Config.templates_directory}/proxy.sh.template"), action: action)
+  end
 
+  private_class_method :shell_command
 end

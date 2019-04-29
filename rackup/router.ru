@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rack'
 require_relative 'router.rb'
 
@@ -15,5 +17,4 @@ module Rack
   end
 end
 
-run WebhookRouter 
-#Rack::Server.start app: WebhookRouter 
+run WebhookRouter

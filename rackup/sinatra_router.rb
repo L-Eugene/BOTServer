@@ -2,12 +2,14 @@ require 'multi_json'
 require 'sinatra'
 require 'telegram/bot'
 require 'colorize'
-#require 'awesome_print'
+# require 'awesome_print'
 
 require_relative '../lib/utilities'
 require_relative '../lib/loader'
 
-include Loader 
+# rubocop:disable Style/MixinUsage
+include Loader
+# rubocop:enable Style/MixinUsage
 
 #
 # load bots in memory. return a lookup table
@@ -15,37 +17,36 @@ include Loader
 #
 set lookup: Loader.lookup
 
-# deserialize JSON data from request body 
+# deserialize JSON data from request body
 def json_load(request_body)
   request_body.rewind
   body = request_body.read
 
   MultiJson.load body
-end  
+end
 
 #
 # HTTPS POST webhook endpoint(s)
 #
-post '/:token' do | token |
-
+post '/:token' do |token|
   # retrieve name, method object pair from lookup table
   bot = settings.lookup[token.to_sym]
-  
+
   if bot
-    # SUCCESS: token found in look-up table 
+    # SUCCESS: token found in look-up table
 
     data = json_load request.body
-    #ap data
+    # ap data
 
     # routing dispatch: call object method run-time execution
-    bot[:method].call data 
+    bot[:method].call data
 
     # WARNING: # it's better to do not write/log tokens in clear on a log files
-    puts "#{time_now}\t#{bot[:name]}\t#{data['update_id']}".green #{data['message']['message_id']}
+    puts "#{time_now}\t#{bot[:name]}\t#{data['update_id']}".green # {data['message']['message_id']}
     status 200
   else
     # WARNING: token not found in look-up table!
-    $stderr.puts "WARNING. unexpected/uknown token: #{token}".red
+    warn "WARNING. unexpected/uknown token: #{token}".red
     status 400
   end
 end
