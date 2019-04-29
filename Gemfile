@@ -1,15 +1,24 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org' do
+  gem 'activerecord'
+  gem 'awesome_print'
+  gem 'colorizer'
 
-gem 'awesome_print'
-gem 'colorizer'
+  gem 'faraday'
+  gem 'faraday_middleware'
 
-# fast JSON processing
-gem 'oj'
-gem 'multi_json'
+  gem 'multi_json'
+  gem 'mysql2'
+  # fast JSON processing
+  gem 'oj'
 
-# fast event machine rack server
-gem 'thin'
-gem 'rack'
+  # fast event machine rack server
+  gem 'rack'
+  gem 'thin'
 
-# Telegram Bot API for Rubysts
-gem 'telegram-bot-ruby'
+  # Telegram Bot API for Rubysts
+  gem 'telegram-bot-ruby'
+end
+
+Dir.glob('app/**/Gemfile').each do |file|
+  instance_eval File.read(file)
+end

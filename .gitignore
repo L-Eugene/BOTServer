@@ -1,5 +1,9 @@
 Gemfile.lock
 app/*
+!app/Rakefile
 log/*
 ssl/*.key
 ssl/*.pem
+config/server.yml
+config/tokens.yml
+.bundle/
