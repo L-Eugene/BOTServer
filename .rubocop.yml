@@ -26,3 +26,11 @@ Metrics/BlockLength:
   Exclude:
     - 'Rakefile'
     - 'rakefile.rb'
+
+Style/GlobalVars:
+  Exclude:
+    - 'Gemfile'
+
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
