@@ -108,6 +108,7 @@ module Tokens
     status['telegram_description'] = result['first_name']
     status['telegram_id'] = result['id']
     status['valid_token'] = true
+    status
   end
 
   def self.bots_config(config_filename)
